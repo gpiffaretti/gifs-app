@@ -1,44 +1,12 @@
-import { useState } from 'react'
 import { CustomHeader } from './shared/components/CustomHeader'
 import { SearchBar } from './gifs/SearchBar'
 import { PreviousSearches } from './shared/components/PreviousSearches'
 import { GifsContainer } from './gifs/GifsContainer'
-import { getGifsByQuery } from './gifs/actions/get-gifs-by-query.action'
-import type { Gif } from './gifs/interfaces/gif.interface';
+import { useGifs } from './gifs/hooks/useGifs';
 
-interface GifsAppProps {
-  maxPreviousSearches?: number;
-}
+export const GifsApp = () => {
 
-export const GifsApp = ({ maxPreviousSearches = 5 }: GifsAppProps) => {
-
-  const [previouSearches, setPreviousSearches] = useState<string[]>(['pokemon']);
-  const [gifs, setGifs] = useState<Gif[]>([]);
-
-  const handleTermClicked = (term: string) => {
-    console.log(term);
-    handleSearch(term);
-  };
-
-  const handleSearch = async (query: string) => {
-    const trimmedQuery = query.trim().toLocaleLowerCase();
-    console.log(trimmedQuery);
-    // execute search
-    const gifs = await getGifsByQuery(trimmedQuery);
-    console.log(gifs);
-    setGifs(gifs);
-
-    // check for repeated elements
-    if(previouSearches.includes(trimmedQuery)) return;
-    
-    // store the search term
-    const newTerms = [trimmedQuery, ...previouSearches];
-
-    if(newTerms.length > maxPreviousSearches) {
-      newTerms.pop();
-    }
-    setPreviousSearches(newTerms);
-  };
+  const { previouSearches,gifs,handleTermClicked,handleSearch } = useGifs({ maxPreviousSearches: 5 });
 
   return (
     <>
