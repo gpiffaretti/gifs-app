@@ -63,13 +63,9 @@ export interface ImageData {
     hash?:     string;
 }
 
-export enum Rating {
-    G = "g",
-}
+export type Rating = "g";
 
-export enum Type {
-    GIF = "gif",
-}
+export type Type = "gif";
 
 export interface User {
     avatar_url:    string;
@@ -84,10 +80,7 @@ export interface User {
     is_verified:   boolean;
 }
 
-export enum Name {
-    Empty = "",
-    Weblona = "weblona",
-}
+export type Name = "" | "weblona";
 
 export interface Meta {
     status:      number;
